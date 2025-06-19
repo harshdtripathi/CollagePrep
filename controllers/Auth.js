@@ -62,7 +62,7 @@ exports.Signup = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Set to true on production
-      sameSite: "Lax",
+      sameSite: "None",
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
     };
 
