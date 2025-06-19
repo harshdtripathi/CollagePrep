@@ -14,10 +14,23 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin:  "https://collage-prep-harsh-tripathis-projects-38af2808.vercel.app"||"http://localhost:5173",
-  credentials: true,
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://collage-prep-harsh-tripathis-projects-38af2808.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json()); // Accept JSON data
 app.use(cookieParser());
 
