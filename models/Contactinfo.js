@@ -88,9 +88,14 @@ async function sendContactSuccessMail(email, name, query) {
 
 
 // ✅ Post-save hook to trigger the email
-ContactSchema.post("save", function (doc) {
-  if (doc.email && doc.fullname) {
-    sendContactSuccessMail(doc.email, doc.fullname, doc.query);
+ContactSchema.pre("save", async function (next) {
+  try {
+    if (this.email && this.fullname) {
+      await sendContactSuccessMail(this.email, this.fullname, this.query);
+    }
+    next();
+  } catch (err) {
+    next(err);
   }
 });
 
