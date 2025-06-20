@@ -59,12 +59,21 @@ exports.Signup = async (req, res) => {
     );
 
     // 6. Cookie options
-     const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Set to true on production
-      sameSite: "Lax",
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-    };
+    //  const cookieOptions = {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production", // Set to true on production
+    //   sameSite: "Lax",
+    //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+    // };
+
+    // newly added
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction, // true for HTTPS (Vercel), false for localhost
+  sameSite: isProduction ? "None" : "Lax", // Required for cross-site cookies in HTTPS
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+};
+
 
   
 
@@ -131,12 +140,20 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
-      const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Set to true on production
-      sameSite: "Lax",
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-    };
+    //   const cookieOptions = {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production", // Set to true on production
+    //   sameSite: "Lax",
+    //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+    // };
+    // newlyadded
+    const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction, // true for HTTPS (Vercel), false for localhost
+  sameSite: isProduction ? "None" : "Lax", // Required for cross-site cookies in HTTPS
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+};
+
 
 
     // 7. Set token in cookie
