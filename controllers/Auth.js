@@ -59,11 +59,9 @@ exports.Signup = async (req, res) => {
     );
 
     // 6. Cookie options
-    const cookieOptions = {
+     const cookieOptions = {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production", 
-      secure:false,
-      // Set to true on production
+      secure: process.env.NODE_ENV === "production", // Set to true on production
       sameSite: "Lax",
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
     };
@@ -135,9 +133,7 @@ exports.login = async (req, res) => {
     );
       const cookieOptions = {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production", 
-      secure:false,
-      // Set to true on production
+      secure: process.env.NODE_ENV === "production", // Set to true on production
       sameSite: "Lax",
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
     };
