@@ -67,6 +67,9 @@ exports.Signup = async (req, res) => {
     // };
 
     // newly added
+
+    const isProduction = process.env.NODE_ENV === "production";
+
 const cookieOptions = {
   httpOnly: true,
   secure: isProduction, // true for HTTPS (Vercel), false for localhost
@@ -147,6 +150,9 @@ exports.login = async (req, res) => {
     //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
     // };
     // newlyadded
+    const isProduction = process.env.NODE_ENV === "production";
+
+    
     const cookieOptions = {
   httpOnly: true,
   secure: isProduction, // true for HTTPS (Vercel), false for localhost
