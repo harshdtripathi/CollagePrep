@@ -171,8 +171,8 @@ exports.login = async (req, res) => {
       message: "Login successful",
       token,
       student: {
-        firstname: student.firstname,
-        lastname: student.lastname,
+        firstname: student.fullname,
+       
         email: student.email,
         // department: student.department,
         // year: student.year,
