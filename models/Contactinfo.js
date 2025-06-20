@@ -57,12 +57,12 @@ async function sendContactSuccessMail(email, name, query) {
     </html>
   `;
 
-  const htmlContentAdmin = `
-    <h3>New Contact Query Received</h3>
-    <p><strong>Name:</strong> ${name}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Query:</strong><br>${query || "No additional details provided."}</p>
-  `;
+  // const htmlContentAdmin = `
+  //   <h3>New Contact Query Received</h3>
+  //   <p><strong>Name:</strong> ${name}</p>
+  //   <p><strong>Email:</strong> ${email}</p>
+  //   <p><strong>Query:</strong><br>${query || "No additional details provided."}</p>
+  // `;
 
   try {
     // 1. Send confirmation to user
@@ -70,8 +70,8 @@ async function sendContactSuccessMail(email, name, query) {
     console.log("User confirmation mail sent to:", email);
 
     // 2. Send alert to admin
-    await mailsender(process.env.MAIL_USER, "New Contact Query Received", htmlContentAdmin);
-    console.log("Admin notified about the new query");
+    // await mailsender(process.env.MAIL_USER, "New Contact Query Received", htmlContentAdmin);
+    // console.log("Admin notified about the new query");
   } catch (error) {
     console.error("Error sending contact emails:", error);
   }
