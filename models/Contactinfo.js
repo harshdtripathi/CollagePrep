@@ -66,6 +66,13 @@ async function sendContactSuccessMail(email, name, query) {
     <p><strong>Query:</strong><br>${query || "No additional details provided."}</p>
   `;
 
+  // const htmlContentAdmin = `
+  //   <h3>New Contact Query Received</h3>
+  //   <p><strong>Name:</strong> ${name}</p>
+  //   <p><strong>Email:</strong> ${email}</p>
+  //   <p><strong>Query:</strong><br>${query || "No additional details provided."}</p>
+  // `;
+
   try {
     // 1. Send confirmation to user
     await mailsender(email, "Query Registered - Mail from CollegePrep", htmlContentUser);
