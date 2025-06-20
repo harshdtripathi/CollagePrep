@@ -59,23 +59,16 @@ exports.Signup = async (req, res) => {
     );
 
     // 6. Cookie options
-    // const cookieOptions = {
-    //   httpOnly: true,
-    //   // secure: process.env.NODE_ENV === "production", 
-    //   secure:false,
-    //   // Set to true on production
-    //   sameSite: "Lax",
-    //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-    // };
+    const cookieOptions = {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === "production", 
+      secure:false,
+      // Set to true on production
+      sameSite: "Lax",
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+    };
 
-    const isProduction = process.env.NODE_ENV === "production";
-
-const cookieOptions = {
-  httpOnly: true,
-  secure: isProduction, // secure: true for https, false for localhost
-  sameSite: isProduction ? "None" : "Lax", // 'None' required for cross-origin cookies
-  expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-};
+  
 
 
     // 7. Set token in cookie
@@ -140,12 +133,15 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
-     const cookieOptions = {
+      const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Set to true on production
+      // secure: process.env.NODE_ENV === "production", 
+      secure:false,
+      // Set to true on production
       sameSite: "Lax",
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
     };
+
 
     // 7. Set token in cookie
     res.cookie("token", token, cookieOptions);
