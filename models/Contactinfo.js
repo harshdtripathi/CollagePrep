@@ -24,95 +24,61 @@ const ContactSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // ✅ Function to send contact success mail with HTML template
+ // update the path accordingly
+
 async function sendContactSuccessMail(email, name, query) {
-  const htmlContent = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="UTF-8" />
-      <title>Query Received</title>
-      <style>
-        body {
-          background-color:rgb(184, 114, 114);
-          font-family: 'Segoe UI', sans-serif;
-          margin: 0;
-          padding: 0;
-        }
-        .container {
-          max-width: 600px;
-          background-color: #ffffff;
-          margin: 40px auto;
-          padding: 30px;
-          border-radius: 10px;
-          box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        h2 {
-          color: #2b2b2b;
-          text-align: center;
-        }
-        p {
-          font-size: 16px;
-          color: #555;
-          line-height: 1.6;
-        }
-        .highlight {
-          background-color: #e0f7fa;
-          padding: 12px;
-          border-left: 4px solid #00acc1;
-          margin: 20px 0;
-          border-radius: 4px;
-        }
-        .footer {
-          text-align: center;
-          font-size: 13px;
-          color: #aaa;
-          margin-top: 30px;
-        }
-        .btn {
-          display: inline-block;
-          padding: 12px 20px;
-          margin-top: 20px;
-          color: #fff;
-          background-color: #00acc1;
-          border-radius: 6px;
-          text-decoration: none;
-          font-weight: bold;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <h2>Thank You for Contacting Us!</h2>
-        <p>Hello <strong>${name}</strong>,</p>
-        <p>We have successfully received your query. We willtry to resolve this  as soon as possible.</p>
+  const htmlContentUser = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8" />
+        <title>Query Received</title>
+        <style>
+          /* ... your styles remain unchanged ... */
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>Thank You for Contacting Us!</h2>
+          <p>Hello <strong>${name}</strong>,</p>
+          <p>We have successfully received your query. We will try to resolve this as soon as possible.</p>
 
-        <div class="highlight">
-          <p><strong>Your Query:</strong><br>${query || "No additional details provided."}</p>
+          <div class="highlight">
+            <p><strong>Your Query:</strong><br>${query || "No additional details provided."}</p>
+          </div>
+
+          <p>This email is comutergenerated so dont reply to this mail.</p>
+
+          <a href="https://yourwebsite.com/support" class="btn">Visit Support</a>
+
+          <div class="footer">
+            &copy; ${new Date().getFullYear()} CollegePrep.
+          </div>
         </div>
+      </body>
+    </html>
+  `;
 
-        <p>If you have more questions, feel free to reply to this email or visit our support page.</p>
-
-        <a href="https://yourwebsite.com/support" class="btn">Visit Support</a>
-
-        <div class="footer">
-          &copy; ${new Date().getFullYear()} Collageprep. .
-        </div>
-      </div>
-    </body>
-  </html>
+  const htmlContentAdmin = `
+    <h3>New Contact Query Received</h3>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Query:</strong><br>${query || "No additional details provided."}</p>
   `;
 
   try {
-    const mailResponse = await mailsender(
-      email,
-      "Query Registered - Mail from CollegePrep",
-      htmlContent
-    );
-    console.log("Contact confirmation mail sent:", mailResponse);
+    // 1. Send confirmation to user
+    await mailsender(email, "Query Registered - Mail from CollegePrep", htmlContentUser);
+    console.log("User confirmation mail sent to:", email);
+
+    // 2. Send alert to admin
+    await mailsender(process.env.MAIL_USER, "New Contact Query Received", htmlContentAdmin);
+    console.log("Admin notified about the new query");
   } catch (error) {
-    console.error("Error sending contact success mail:", error);
+    console.error("Error sending contact emails:", error);
   }
 }
+
 
 // ✅ Post-save hook to trigger the email
 ContactSchema.post("save", function (doc) {

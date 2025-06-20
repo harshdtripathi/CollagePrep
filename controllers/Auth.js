@@ -7,7 +7,7 @@ const JWT = require("jsonwebtoken");
 exports.Signup = async (req, res) => {
   try {
     const { fullname, email, password, confirmpassword } = req.body;
-
+        
     // 1. Validate all fields
     if (!fullname || !email || !password || !confirmpassword ) {
       return res.status(400).json({
