@@ -16,31 +16,25 @@ const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const cookieOptions = {
-  httpOnly: true,
-  secure: isProduction, // secure: true for https, false for localhost
-  sameSite: isProduction ? "None" : "Lax", // 'None' required for cross-origin cookies
-  expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-};
 
-// Middleware
-// const allowedOrigins = [
-//   "http://localhost:5173",
+Middleware
+const allowedOrigins = [
+  "http://localhost:5173",
   
-// ];
+];
 
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 // app.use(
 //   cors({
 //     origin: true, // Reflects the request origin
