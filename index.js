@@ -7,6 +7,7 @@ const authroute= require("./Routes/Profile")
 
 // Load environment variables
 dotenv.config();
+const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
 connectDB();
@@ -16,7 +17,7 @@ const app = express();
 // Middleware
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://collage-prep-harsh-tripathis-projects-38af2808.vercel.app",
+  
 ];
 
 app.use(
@@ -46,8 +47,8 @@ app.use("/api/auth", authroute);
 // app.use("/api/papers", require("./routes/paperRoutes"));
 
 // Start server
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-module.exports = app;
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
