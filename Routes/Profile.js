@@ -24,7 +24,7 @@ router.post("/login",login);
 router.post("/signup",Signup);
 router.get("/getsubjectdetails",auth,getsubjectmaterial)
 router.post("/upload", upload.array("files", 5), handleUpload);
-router.post("/contact",auth,StudentContact );
+router.post("/contact",StudentContact );
 router.post("/logout",logout );
 
 module.exports=router;
