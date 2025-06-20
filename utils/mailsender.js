@@ -49,6 +49,7 @@ const mailsender= async(email,title, body)=>{
         pass: process.env.MAIL_PASS,
       },
     });
+       
 
     const info = await transporter.sendMail({
       from: `"CollegePrep" <${process.env.MAIL_USER}>`,
@@ -56,6 +57,7 @@ const mailsender= async(email,title, body)=>{
       subject:  title,
       html: body,
     });
+       console.log("informationmail",info);
 
     return info;
   } catch (error) {
