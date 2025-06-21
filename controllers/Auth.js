@@ -90,7 +90,7 @@ const cookieOptions = {
       message: "Signup successful",
       token, // optional
       student: {
-        fullname: student.fullname,
+        firstname: student.fullname,
        
         email: student.email,
         // department: student.department,
