@@ -58,7 +58,8 @@ async function sendContactSuccessMail(email, name, query) {
   }
 }
 
-// ✅ CORRECT pre-save hook
+
+// ✅ Post-save hook to trigger the email
 ContactSchema.pre("save", async function (next) {
   try {
     if (this.email && this.fullname) {
