@@ -52,6 +52,7 @@ exports.Signup = async (req, res) => {
       {
         id: student._id,
         email: student.email,
+        
        
       },
       process.env.JWT_SECRET,
@@ -121,6 +122,7 @@ exports.login = async (req, res) => {
 
     // Find student
     const student = await Student.findOne({ email });
+    console.log("fullname",student.fullname)
     if (!student) {
       return res.status(404).json({
         success: false,
@@ -171,8 +173,8 @@ exports.login = async (req, res) => {
       message: "Login successful",
       token,
       student: {
-        firstname: student.firstname,
-        lastname: student.lastname,
+        fullname: student.fullname,
+        
         email: student.email,
         // department: student.department,
         // year: student.year,
