@@ -13,11 +13,35 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
+
+
+
+
+const allowedOrigins = [
+  "http://localhost:5173",
+ "https://collage-prep-omega.vercel.app"
+  
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+// app.use(
+//   cors({
+//     origin: true, // Reflects the request origin
+//     credentials: true, // Allow cookies (Authorization headers, etc.)
+//   })
+// );
+
 app.use(express.json()); // Accept JSON data
 app.use(cookieParser());
 

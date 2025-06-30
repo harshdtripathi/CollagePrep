@@ -91,7 +91,7 @@ const cookieOptions = {
       message: "Signup successful",
       token, // optional
       student: {
-        fullname: student.fullname,
+        firstname: student.fullname,
        
         email: student.email,
         // department: student.department,
@@ -173,8 +173,13 @@ exports.login = async (req, res) => {
       message: "Login successful",
       token,
       student: {
+<<<<<<< HEAD
         fullname: student.fullname,
         
+=======
+        firstname: student.fullname,
+       
+>>>>>>> e04decb409140df8df2562b5e390b8556ad31ca7
         email: student.email,
         // department: student.department,
         // year: student.year,
